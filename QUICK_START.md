@@ -15,7 +15,7 @@ Or create it manually with this content:
 
 ```env
 # Database - REPLACE THIS with your actual database URL
-DATABASE_URL="postgresql://user:password@localhost:5432/jobtracker"
+DATABASE_URL="postgresql://user:password@localhost:5432/roleriser"
 
 # Clerk - Get these from clerk.com after signing up
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxxxx
@@ -59,10 +59,10 @@ brew install postgresql
 brew services start postgresql
 
 # Create database
-createdb jobtracker
+createdb roleriser
 
 # Your DATABASE_URL:
-DATABASE_URL="postgresql://localhost:5432/jobtracker"
+DATABASE_URL="postgresql://localhost:5432/roleriser"
 ```
 
 ## Step 3: Set Up Clerk Auth (1 minute)
@@ -120,7 +120,7 @@ Open [http://localhost:3000](http://localhost:3000) 🎉
 
 - **Neon/Supabase**: Free PostgreSQL database in the cloud
 - **Clerk**: User authentication (sign up, sign in, user management)
-- **Your App**: The Job Tracker application
+- **Your App**: The Role Riser application
 
 ## Example .env File (Fill in your values)
 

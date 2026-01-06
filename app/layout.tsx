@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Job Tracker - Track Your Job Applications",
+  title: "Role Riser - Track Your Job Applications",
   description: "A comprehensive SaaS job application tracker with Kanban boards, analytics, and more",
   manifest: "/manifest.json",
 };

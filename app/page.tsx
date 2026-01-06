@@ -6,40 +6,40 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background gradient-light">
       {/* Header */}
-      <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <Briefcase className="h-8 w-8 text-primary" />
-          <span className="text-2xl font-bold text-foreground">Job Tracker</span>
+      <header className="container mx-auto px-4 py-4 md:py-6 flex justify-between items-center">
+        <div className="flex items-center gap-1.5 md:gap-2">
+          <Briefcase className="h-6 w-6 md:h-8 md:w-8 text-primary" />
+          <span className="text-xl md:text-2xl font-bold text-foreground">Role Riser</span>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-2 md:gap-4">
           <Link href="/sign-in">
-            <Button variant="ghost">Sign In</Button>
+            <Button variant="ghost" size="sm" className="md:text-base">Sign In</Button>
           </Link>
           <Link href="/sign-up">
-            <Button>Get Started</Button>
+            <Button size="sm" className="md:text-base">Get Started</Button>
           </Link>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">
+      <section className="container mx-auto px-4 py-12 md:py-20 text-center">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent leading-tight">
           Track Your Job Search
           <br />
           Like a Pro
         </h1>
-        <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+        <p className="text-base md:text-xl text-muted-foreground mb-6 md:mb-8 max-w-2xl mx-auto px-4">
           Organize applications, manage interviews, and land your dream job with our powerful
           Kanban-style job tracker. Complete with analytics, reminders, and collaboration features.
         </p>
-        <div className="flex gap-4 justify-center">
-          <Link href="/sign-up">
-            <Button size="lg" className="gap-2">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center px-4">
+          <Link href="/sign-up" className="w-full sm:w-auto">
+            <Button size="lg" className="w-full gap-2">
               Start Free Trial <ArrowRight className="h-5 w-5" />
             </Button>
           </Link>
-          <Link href="/dashboard">
-            <Button size="lg" variant="outline">
+          <Link href="/dashboard" className="w-full sm:w-auto">
+            <Button size="lg" variant="outline" className="w-full">
               View Demo
             </Button>
           </Link>
@@ -47,9 +47,9 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="container mx-auto px-4 py-20">
-        <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Everything You Need</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <section className="container mx-auto px-4 py-12 md:py-20">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground">Everything You Need</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           <FeatureCard
             icon={<Briefcase className="h-10 w-10 text-primary" />}
             title="Kanban Boards"
@@ -74,26 +74,26 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="container mx-auto px-4 py-20 text-center">
-        <div className="bg-primary text-primary-foreground rounded-2xl p-12">
-          <h2 className="text-4xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Join thousands of job seekers who are organizing their search with Job Tracker
+      <section className="container mx-auto px-4 py-12 md:py-20 text-center">
+        <div className="bg-primary text-primary-foreground rounded-xl md:rounded-2xl p-6 md:p-12">
+          <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4">Ready to Get Started?</h2>
+          <p className="text-base md:text-xl mb-6 md:mb-8 opacity-90">
+            Join thousands of job seekers who are organizing their search with Role Riser
           </p>
           <Link href="/sign-up">
-            <Button size="lg" variant="secondary" className="gap-2">
+            <Button size="lg" variant="secondary" className="w-full sm:w-auto gap-2">
               Create Free Account <ArrowRight className="h-5 w-5" />
             </Button>
           </Link>
-          <p className="mt-4 text-sm opacity-75">50 jobs free • No credit card required</p>
+          <p className="mt-4 text-xs md:text-sm opacity-75">50 jobs free • No credit card required</p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="container mx-auto px-4 py-8 border-t border-border">
-        <div className="flex justify-between items-center">
-          <p className="text-muted-foreground">© 2026 Job Tracker. All rights reserved.</p>
-          <div className="flex gap-6">
+      <footer className="container mx-auto px-4 py-6 md:py-8 border-t border-border">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-muted-foreground text-sm">© 2026 Role Riser. All rights reserved.</p>
+          <div className="flex gap-4 md:gap-6">
             <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
               Privacy
             </Link>

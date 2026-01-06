@@ -270,8 +270,17 @@ export const jobRouter = router({
     });
 
     const totalJobs = jobs.length;
-    const appliedCount = statusCounts.APPLIED || 0;
-    const interviewCount = statusCounts.INTERVIEW || 0;
+    
+    // Count jobs that have been applied (includes all statuses after APPLIED in the pipeline)
+    // Jobs in APPLIED, ASSESSMENT, INTERVIEW, OFFER, REJECTED, WITHDRAWN have all been applied
+    const appliedStatuses = ['APPLIED', 'ASSESSMENT', 'INTERVIEW', 'OFFER', 'REJECTED', 'WITHDRAWN'];
+    const totalApplied = appliedStatuses.reduce((sum, status) => sum + (statusCounts[status] || 0), 0);
+    
+    // Jobs that reached interview stage (INTERVIEW, OFFER, REJECTED after interview, WITHDRAWN after interview)
+    // For simplicity, count INTERVIEW + OFFER (as they definitely had interviews)
+    const interviewedStatuses = ['INTERVIEW', 'OFFER'];
+    const totalInterviewed = interviewedStatuses.reduce((sum, status) => sum + (statusCounts[status] || 0), 0);
+    
     const offerCount = statusCounts.OFFER || 0;
     const rejectedCount = statusCounts.REJECTED || 0;
 
@@ -279,9 +288,12 @@ export const jobRouter = router({
       totalJobs,
       statusCounts,
       weeklyApplications,
-      conversionRate: appliedCount > 0 ? (interviewCount / appliedCount) * 100 : 0,
-      offerRate: appliedCount > 0 ? (offerCount / appliedCount) * 100 : 0,
-      rejectionRate: appliedCount > 0 ? (rejectedCount / appliedCount) * 100 : 0,
+      // Interview rate: % of applied jobs that reached interview stage
+      conversionRate: totalApplied > 0 ? (totalInterviewed / totalApplied) * 100 : 0,
+      // Offer rate: % of applied jobs that received offers
+      offerRate: totalApplied > 0 ? (offerCount / totalApplied) * 100 : 0,
+      // Rejection rate: % of applied jobs that were rejected
+      rejectionRate: totalApplied > 0 ? (rejectedCount / totalApplied) * 100 : 0,
     };
   }),
 });

@@ -1,95 +1,96 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { KanbanBoard } from "@/components/kanban/KanbanBoard";
+import { JobsTable } from "@/components/table/JobsTable";
+import { TodaysTasks } from "@/components/today/TodaysTasks";
+import { AnalyticsDashboard } from "@/components/analytics/AnalyticsDashboard";
 import { QuickAddJob } from "@/components/forms/QuickAddJob";
 import { Loader2, LayoutGrid, Table, Calendar, BarChart3 } from "lucide-react";
 
 export default function DashboardPage() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Job Tracker</h1>
-          <p className="text-muted-foreground">Track and manage your job applications</p>
+    <div className="px-3 py-4 md:px-4 md:py-8 max-w-7xl mx-auto">
+      {/* Header - Mobile optimized */}
+      <div className="flex justify-between items-start gap-3 mb-4 md:mb-6">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-xl md:text-3xl font-bold text-foreground truncate">
+            Role Riser
+          </h1>
+          <p className="text-sm md:text-base text-muted-foreground">
+            Track your applications
+          </p>
         </div>
-        <QuickAddJob />
+        {/* Add Job button - hidden on mobile (shown in header) */}
+        <div className="hidden md:block">
+          <QuickAddJob />
+        </div>
       </div>
 
-      <Tabs defaultValue="kanban" className="w-full">
-        <TabsList className="grid w-full max-w-md grid-cols-4">
-          <TabsTrigger value="kanban" className="gap-2">
-            <LayoutGrid className="h-4 w-4" />
-            <span className="hidden sm:inline">Kanban</span>
+      {!mounted ? (
+        <LoadingSpinner />
+      ) : (
+      <Tabs defaultValue="table" className="w-full">
+        {/* Tab Navigation - Mobile optimized with full width */}
+        <TabsList className="w-full grid grid-cols-4 h-12 md:h-10 md:w-auto md:max-w-md">
+          <TabsTrigger value="table" className="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 text-xs md:text-sm py-2">
+            <Table className="h-4 w-4 md:h-4 md:w-4" />
+            <span>List</span>
           </TabsTrigger>
-          <TabsTrigger value="table" className="gap-2">
-            <Table className="h-4 w-4" />
-            <span className="hidden sm:inline">Table</span>
+          <TabsTrigger value="kanban" className="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 text-xs md:text-sm py-2">
+            <LayoutGrid className="h-4 w-4 md:h-4 md:w-4" />
+            <span>Board</span>
           </TabsTrigger>
-          <TabsTrigger value="today" className="gap-2">
-            <Calendar className="h-4 w-4" />
-            <span className="hidden sm:inline">Today</span>
+          <TabsTrigger value="today" className="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 text-xs md:text-sm py-2">
+            <Calendar className="h-4 w-4 md:h-4 md:w-4" />
+            <span>Today</span>
           </TabsTrigger>
-          <TabsTrigger value="analytics" className="gap-2">
-            <BarChart3 className="h-4 w-4" />
-            <span className="hidden sm:inline">Analytics</span>
+          <TabsTrigger value="analytics" className="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 text-xs md:text-sm py-2">
+            <BarChart3 className="h-4 w-4 md:h-4 md:w-4" />
+            <span>Stats</span>
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="kanban" className="mt-6">
+        <TabsContent value="table" className="mt-4 md:mt-6">
+          <Suspense fallback={<LoadingSpinner />}>
+            <JobsTable />
+          </Suspense>
+        </TabsContent>
+
+        <TabsContent value="kanban" className="mt-4 md:mt-6">
           <Suspense fallback={<LoadingSpinner />}>
             <KanbanBoard />
           </Suspense>
         </TabsContent>
 
-        <TabsContent value="table" className="mt-6">
+        <TabsContent value="today" className="mt-4 md:mt-6">
           <Suspense fallback={<LoadingSpinner />}>
-            <div className="bg-card rounded-lg border border-border p-8 text-center">
-              <Table className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2 text-foreground">Table View</h3>
-              <p className="text-muted-foreground">
-                View and manage your jobs in a sortable table format
-              </p>
-              <p className="text-sm text-muted-foreground/70 mt-4">Coming soon...</p>
-            </div>
+            <TodaysTasks />
           </Suspense>
         </TabsContent>
 
-        <TabsContent value="today" className="mt-6">
+        <TabsContent value="analytics" className="mt-4 md:mt-6">
           <Suspense fallback={<LoadingSpinner />}>
-            <div className="bg-card rounded-lg border border-border p-8 text-center">
-              <Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2 text-foreground">Today's Tasks</h3>
-              <p className="text-muted-foreground">
-                View deadlines and follow-ups due today
-              </p>
-              <p className="text-sm text-muted-foreground/70 mt-4">Coming soon...</p>
-            </div>
-          </Suspense>
-        </TabsContent>
-
-        <TabsContent value="analytics" className="mt-6">
-          <Suspense fallback={<LoadingSpinner />}>
-            <div className="bg-card rounded-lg border border-border p-8 text-center">
-              <BarChart3 className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2 text-foreground">Analytics Dashboard</h3>
-              <p className="text-muted-foreground">
-                Track your application success rates and trends
-              </p>
-              <p className="text-sm text-muted-foreground/70 mt-4">Coming soon...</p>
-            </div>
+            <AnalyticsDashboard />
           </Suspense>
         </TabsContent>
       </Tabs>
+      )}
     </div>
   );
 }
 
 function LoadingSpinner() {
   return (
-    <div className="flex items-center justify-center h-64">
-      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    <div className="flex items-center justify-center h-48 md:h-64">
+      <Loader2 className="h-6 w-6 md:h-8 md:w-8 animate-spin text-primary" />
     </div>
   );
 }

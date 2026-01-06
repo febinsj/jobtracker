@@ -1,6 +1,6 @@
 # Quick Setup Guide
 
-Get your Job Tracker app running in 5 minutes!
+Get your Role Riser app running in 5 minutes!
 
 ## Prerequisites
 
@@ -44,10 +44,10 @@ brew install postgresql
 brew services start postgresql
 
 # Create database
-createdb jobtracker
+createdb roleriser
 
 # Your connection string:
-# postgresql://localhost:5432/jobtracker
+# postgresql://localhost:5432/roleriser
 ```
 
 ## Step 3: Set Up Clerk (1 minute)

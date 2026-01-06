@@ -1,11 +1,11 @@
 # Project Structure
 
-Complete overview of the Job Tracker application architecture.
+Complete overview of the Role Riser application architecture.
 
 ## Directory Tree
 
 ```
-job-tracker/
+role-riser/
 ├── app/                          # Next.js 15 App Router
 │   ├── (dashboard)/             # Protected dashboard routes
 │   │   ├── dashboard/           # Main dashboard

@@ -1,4 +1,4 @@
-# Job Tracker - Multi-User SaaS Application
+# Role Riser - Multi-User SaaS Application
 
 A comprehensive job application tracking system built with Next.js 15, featuring Kanban boards, analytics, and collaboration tools. Track your job search with expandable job descriptions, reminders, and shareable boards.
 
@@ -37,7 +37,7 @@ A comprehensive job application tracking system built with Next.js 15, featuring
 
 \`\`\`bash
 git clone <your-repo-url>
-cd job-tracker
+cd role-riser
 npm install
 \`\`\`
 
@@ -49,7 +49,7 @@ Create a `.env` file in the root directory:
 
 # Database (Neon/Supabase PostgreSQL)
 
-DATABASE_URL="postgresql://user:password@host:5432/jobtracker?schema=public"
+DATABASE_URL="postgresql://user:password@host:5432/roleriser?schema=public"
 
 # Clerk Authentication
 
@@ -125,11 +125,11 @@ docker run --name postgres -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgre
 
 # Create database
 
-createdb jobtracker
+createdb roleriser
 
 # Update .env
 
-DATABASE_URL="postgresql://user:password@localhost:5432/jobtracker?schema=public"
+DATABASE_URL="postgresql://user:password@localhost:5432/roleriser?schema=public"
 \`\`\`
 
 ## Clerk Setup
@@ -164,7 +164,7 @@ Make sure to set all environment variables in your hosting platform:
 ## Project Structure
 
 \`\`\`
-job-tracker/
+role-riser/
 ├── app/ # Next.js 15 App Router
 │ ├── (dashboard)/ # Protected dashboard routes
 │ │ ├── dashboard/ # Main dashboard with tabs
