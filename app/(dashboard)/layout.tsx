@@ -48,7 +48,23 @@ export default function DashboardLayout({
   ];
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/sign-in" });
+    try {
+      // First, call signOut with redirect: false to get the response
+      const result = await signOut({ redirect: false, callbackUrl: "/sign-in" });
+      
+      // If signOut was successful (session destroyed on server), redirect
+      if (result?.url) {
+        // Clear any client-side session data
+        window.location.href = result.url;
+      } else {
+        // Fallback: force redirect to sign-in
+        window.location.href = "/sign-in";
+      }
+    } catch (error) {
+      console.error("Sign out error:", error);
+      // On error, still try to redirect to sign-in
+      window.location.href = "/sign-in";
+    }
   };
 
   return (
