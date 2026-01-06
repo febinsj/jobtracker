@@ -49,15 +49,27 @@ export default function DashboardLayout({
 
   const handleSignOut = async () => {
     try {
-      // First, call signOut with redirect: false to get the response
-      const result = await signOut({ redirect: false, callbackUrl: "/sign-in" });
-      
-      // If signOut was successful (session destroyed on server), redirect
-      if (result?.url) {
-        // Clear any client-side session data
-        window.location.href = result.url;
+      // Call the signOut API endpoint directly to ensure cookie is deleted
+      const response = await fetch("/api/auth/signout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ callbackUrl: "/sign-in" }),
+      });
+
+      if (response.ok) {
+        // Manually clear any auth cookies on client side as backup
+        document.cookie = "authjs.session-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "authjs.callback-url=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "authjs.csrf-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "__Secure-authjs.session-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure;";
+        
+        // Force a full page reload to sign-in page
+        window.location.href = "/sign-in";
       } else {
-        // Fallback: force redirect to sign-in
+        console.error("Sign out failed:", response.status);
+        // Still try to redirect
         window.location.href = "/sign-in";
       }
     } catch (error) {
