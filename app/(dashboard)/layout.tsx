@@ -8,17 +8,16 @@ import {
   LayoutDashboard,
   Share2,
   Settings,
-  LogOut,
   User,
   Menu,
   X,
-  Plus
 } from "lucide-react";
 import { Toaster } from "sonner";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { QuickAddJob } from "@/components/forms/QuickAddJob";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 import { trpc } from "@/lib/trpc/client";
 
 export default function DashboardLayout({
@@ -46,11 +45,6 @@ export default function DashboardLayout({
     { href: "/dashboard/shares", label: "Share", icon: Share2 },
     { href: "/dashboard/settings", label: "Settings", icon: Settings },
   ];
-
-  const handleSignOut = async () => {
-    // Use NextAuth's signOut with redirect
-    await signOut({ callbackUrl: "/sign-in", redirect: true });
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -103,15 +97,9 @@ export default function DashboardLayout({
                     {displayName}
                   </span>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleSignOut}
+                <SignOutButton
                   className="gap-2 text-muted-foreground hover:text-foreground"
-                >
-                  <LogOut className="h-4 w-4" />
-                  Sign Out
-                </Button>
+                />
               </div>
 
               {/* Mobile menu button */}
@@ -172,15 +160,9 @@ export default function DashboardLayout({
               </div>
 
               <div className="pt-2 border-t border-border">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleSignOut}
+                <SignOutButton
                   className="w-full justify-start gap-3 px-3 py-2.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                >
-                  <LogOut className="h-4 w-4" />
-                  Sign Out
-                </Button>
+                />
               </div>
             </div>
           </div>
