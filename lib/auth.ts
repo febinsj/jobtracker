@@ -9,7 +9,11 @@ const signInSchema = z.object({
   password: z.string().min(6),
 });
 
+const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith("https://") ?? process.env.NODE_ENV === "production";
+const cookiePrefix = useSecureCookies ? "__Secure-" : "";
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
@@ -54,36 +58,30 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   cookies: {
     sessionToken: {
-      name: process.env.NODE_ENV === "production"
-        ? `__Secure-authjs.session-token`
-        : `authjs.session-token`,
+      name: `${cookiePrefix}authjs.session-token`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: process.env.NODE_ENV === "production",
+        secure: useSecureCookies,
       },
     },
     callbackUrl: {
-      name: process.env.NODE_ENV === "production"
-        ? `__Secure-authjs.callback-url`
-        : `authjs.callback-url`,
+      name: `${cookiePrefix}authjs.callback-url`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: process.env.NODE_ENV === "production",
+        secure: useSecureCookies,
       },
     },
     csrfToken: {
-      name: process.env.NODE_ENV === "production"
-        ? `__Host-authjs.csrf-token`
-        : `authjs.csrf-token`,
+      name: useSecureCookies ? `__Host-authjs.csrf-token` : `authjs.csrf-token`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: process.env.NODE_ENV === "production",
+        secure: useSecureCookies,
       },
     },
   },
