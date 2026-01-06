@@ -36,8 +36,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return {
           id: user.id,
           email: user.email,
-          name: user.firstName && user.lastName 
-            ? `${user.firstName} ${user.lastName}` 
+          name: user.firstName && user.lastName
+            ? `${user.firstName} ${user.lastName}`
             : user.firstName || user.email,
         };
       },
@@ -50,6 +50,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  cookies: {
+    sessionToken: {
+      name: `authjs.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
   },
   callbacks: {
     async jwt({ token, user }) {

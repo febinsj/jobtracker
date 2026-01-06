@@ -48,35 +48,8 @@ export default function DashboardLayout({
   ];
 
   const handleSignOut = async () => {
-    try {
-      // Call the signOut API endpoint directly to ensure cookie is deleted
-      const response = await fetch("/api/auth/signout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ callbackUrl: "/sign-in" }),
-      });
-
-      if (response.ok) {
-        // Manually clear any auth cookies on client side as backup
-        document.cookie = "authjs.session-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie = "authjs.callback-url=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie = "authjs.csrf-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie = "__Secure-authjs.session-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure;";
-        
-        // Force a full page reload to sign-in page
-        window.location.href = "/sign-in";
-      } else {
-        console.error("Sign out failed:", response.status);
-        // Still try to redirect
-        window.location.href = "/sign-in";
-      }
-    } catch (error) {
-      console.error("Sign out error:", error);
-      // On error, still try to redirect to sign-in
-      window.location.href = "/sign-in";
-    }
+    // Use NextAuth's signOut with redirect
+    await signOut({ callbackUrl: "/sign-in", redirect: true });
   };
 
   return (
